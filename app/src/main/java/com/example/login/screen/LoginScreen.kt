@@ -49,6 +49,7 @@ import com.example.login.compomnenets.endtext
 import com.example.login.compomnenets.endtext1
 import com.example.login.compomnenets.undertext
 import com.example.login.ui.theme.Primary
+import com.example.login.ui.theme.Purple40
 
 @Composable
 fun LoginScreen(navController: NavController)
@@ -64,7 +65,7 @@ fun LoginScreen(navController: NavController)
 
 
     ){
-        Image(painter = painterResource(id = R.drawable.img_8),
+        Image(painter = painterResource(id = R.drawable.img_9),
             contentDescription = null,
             contentScale = ContentScale.FillHeight,
             modifier = Modifier.fillMaxSize())
@@ -123,7 +124,7 @@ fun LoginScreen(navController: NavController)
                     ), text =
                     buildAnnotatedString {
                         append(ini)
-                        withStyle(style = SpanStyle(color = Primary))
+                        withStyle(style = SpanStyle(color = Purple40))
                         {
                             pushStringAnnotation(tag = next, annotation = next)
                             append(next)

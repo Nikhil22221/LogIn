@@ -49,8 +49,11 @@ import com.example.login.compomnenets.MyTextField
 import com.example.login.compomnenets.NormalText
 import com.example.login.compomnenets.checkbox
 import com.example.login.compomnenets.endtext
+import com.example.login.ui.theme.AccentColor
 import com.example.login.ui.theme.Primary
+import com.example.login.ui.theme.Purple40
 import com.example.login.ui.theme.Secondary
+import com.example.login.ui.theme.TextColor
 
 @Composable
 fun SignUpScreen(navController: NavController)
@@ -118,13 +121,13 @@ fun SignUpScreen(navController: NavController)
                 ClickableText(modifier = Modifier.fillMaxWidth(),
                     style = TextStyle(
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Normal,
+                        fontWeight = FontWeight.Bold,
                         fontStyle = FontStyle.Normal,
                         textAlign = TextAlign.Center
                     ), text =
                     buildAnnotatedString {
                         append(ini)
-                        withStyle(style = SpanStyle(color = Primary))
+                        withStyle(style = SpanStyle(color = Purple40))
                         {
                             pushStringAnnotation(tag = next, annotation = next)
                             append(next)
