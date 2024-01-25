@@ -1,5 +1,6 @@
 package com.example.login.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -59,10 +61,14 @@ fun SignUpScreen(navController: NavController)
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(28.dp)
+
 
     ) {
-        Column(modifier = Modifier.fillMaxSize())
+        Image(painter = painterResource(id = R.drawable.img_8),
+            contentDescription = null,
+            contentScale = ContentScale.FillHeight,
+            modifier = Modifier.fillMaxSize())
+        Column(modifier = Modifier.fillMaxSize().padding(28.dp))
         {
             NormalText(value = "Hey There,")
             HeadingText(value = "Create An Account")
