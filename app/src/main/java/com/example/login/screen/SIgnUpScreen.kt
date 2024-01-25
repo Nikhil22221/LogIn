@@ -64,7 +64,7 @@ fun SignUpScreen(navController: NavController)
 
 
     ) {
-        Image(painter = painterResource(id = R.drawable.img_8),
+        Image(painter = painterResource(id = R.drawable.img_9),
             contentDescription = null,
             contentScale = ContentScale.FillHeight,
             modifier = Modifier.fillMaxSize())
