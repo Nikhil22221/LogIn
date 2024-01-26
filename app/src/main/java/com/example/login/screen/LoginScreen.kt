@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.login.R
+import com.example.login.compomnenets.ButtonLogin
 //import com.example.login.compomnenets.ButtonComponent
 //import com.example.login.compomnenets.ButtonComponent1
 import com.example.login.compomnenets.Divider
@@ -45,8 +46,8 @@ import com.example.login.compomnenets.HeadingText
 import com.example.login.compomnenets.MyPasswordField
 import com.example.login.compomnenets.MyTextField
 import com.example.login.compomnenets.NormalText
-import com.example.login.compomnenets.endtext
-import com.example.login.compomnenets.endtext1
+//import com.example.login.compomnenets.endtext
+//import com.example.login.compomnenets.endtext1
 import com.example.login.compomnenets.undertext
 import com.example.login.ui.theme.Primary
 import com.example.login.ui.theme.Purple40
@@ -76,33 +77,12 @@ fun LoginScreen(navController: NavController)
             NormalText(value = "Login")
             HeadingText(value = "Welcome Back")
             Spacer(modifier = Modifier.height(25.dp))
-            MyTextField(label = "Email", painterResource(id = R.drawable.img_2))
-            MyPasswordField(label = "Password", painterResource(id = R.drawable.img_3) )
+            MyTextField(label = "Email", painterResource(id = R.drawable.img_2), onTextSelected = {}, errorStatus = false)
+            MyPasswordField(label = "Password", painterResource(id = R.drawable.img_3), onTextSelected = {}, errorStatus = false )
             Spacer(modifier = Modifier.height(45.dp))
             undertext()
             Spacer(modifier = Modifier.height(95.dp))
-            Button(onClick = {},modifier = Modifier
-                .fillMaxWidth()
-                .height(45.dp),
-                contentPadding = PaddingValues(),
-                colors = ButtonDefaults.buttonColors(Color.Transparent)
-            )
-            {
-
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(45.dp)
-                    .background(
-                        brush = Brush.horizontalGradient(listOf(Color.Red, Color.Blue)),
-                        shape = RoundedCornerShape(50.dp)
-                    ),
-                    contentAlignment = Alignment.Center)
-                {
-                    Text(text = "Login",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp)
-                }
-            }
+            ButtonLogin()
             Spacer(modifier = Modifier.height(10.dp))
             Divider()
             Spacer(modifier = Modifier.height(15.dp))

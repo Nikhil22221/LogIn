@@ -35,11 +35,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLink
 import androidx.navigation.compose.rememberNavController
 import com.example.login.R
 import com.example.login.app.PostOfficeApp
+import com.example.login.compomnenets.ButtonRegister
 //import com.example.login.compomnenets.ButtonComponent
 //import com.example.login.compomnenets.ButtonComponent1
 import com.example.login.compomnenets.Divider
@@ -48,15 +50,19 @@ import com.example.login.compomnenets.MyPasswordField
 import com.example.login.compomnenets.MyTextField
 import com.example.login.compomnenets.NormalText
 import com.example.login.compomnenets.checkbox
-import com.example.login.compomnenets.endtext
+import com.example.login.data.LoginViewModel
+import com.example.login.data.UIEvent
+//import com.example.login.compomnenets.endtext
 import com.example.login.ui.theme.AccentColor
 import com.example.login.ui.theme.Primary
 import com.example.login.ui.theme.Purple40
 import com.example.login.ui.theme.Secondary
 import com.example.login.ui.theme.TextColor
+import org.checkerframework.checker.guieffect.qual.UI
 
 @Composable
-fun SignUpScreen(navController: NavController)
+fun SignUpScreen(navController: NavController, loginViewModel: LoginViewModel = viewModel()
+)
 {
     Surface(
 
@@ -67,45 +73,40 @@ fun SignUpScreen(navController: NavController)
 
 
     ) {
-        Image(painter = painterResource(id = R.drawable.img_9),
+        Image(painter = painterResource(id = R.drawable.img_8),
             contentDescription = null,
             contentScale = ContentScale.FillHeight,
             modifier = Modifier.fillMaxSize())
-        Column(modifier = Modifier.fillMaxSize().padding(28.dp))
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(28.dp))
         {
             NormalText(value = "Hey There,")
             HeadingText(value = "Create An Account")
             Spacer(modifier = Modifier.height(20.dp))
-            MyTextField(label = "First Name", painterResource(id = R.drawable.img_1))
-            MyTextField(label = "Last Name", painterResource(id = R.drawable.img_1))
-            MyTextField(label = "Email", painterResource(id = R.drawable.img_2))
-           MyPasswordField(label = "Password", painterResource(id = R.drawable.img_3) )
+            MyTextField(label = "First Name", painterResource(id = R.drawable.img_1),
+                onTextSelected = { loginViewModel.onEVent(UIEvent.FirstNameChanged(it))},
+                errorStatus = loginViewModel.registrationUIState.value.errorfirstName)
+
+            MyTextField(label = "Last Name", painterResource(id = R.drawable.img_1) ,
+                onTextSelected = { loginViewModel.onEVent(UIEvent.LastNameChanged(it))},
+                errorStatus = loginViewModel.registrationUIState.value.errorlastName)
+
+            MyTextField(label = "Email", painterResource(id = R.drawable.img_2),
+                onTextSelected = { loginViewModel.onEVent(UIEvent.EmailChanged(it))},
+                errorStatus = loginViewModel.registrationUIState.value.erroremail)
+
+           MyPasswordField(label = "Password", painterResource(id = R.drawable.img_3),
+               onTextSelected = {loginViewModel.onEVent(UIEvent.PasswordChanged(it))} ,
+               errorStatus = loginViewModel.registrationUIState.value.errorpassowrd)
+
             Spacer(modifier = Modifier.height(5.dp))
             checkbox()
             Spacer(modifier = Modifier.height(65.dp))
 
-                Button(onClick = {},modifier = Modifier
-                    .fillMaxWidth()
-                    .height(45.dp),
-                    contentPadding = PaddingValues(),
-                    colors = ButtonDefaults.buttonColors(Color.Transparent)
-                )
-                {
-                    Box(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(45.dp)
-                        .background(
-                            brush = Brush.horizontalGradient(listOf(Secondary, Primary)),
-                            shape = RoundedCornerShape(50.dp)
-                        ),
-                        contentAlignment = Alignment.Center)
-                    {
-                        Text(text = "Register",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp)
-                    }
-                }
-
+                ButtonRegister(onClicked = {
+                    loginViewModel.onEVent(UIEvent.Registrationclicked)
+                })
             Spacer(modifier = Modifier.height(15.dp))
             Divider()
             Spacer(modifier = Modifier.height(15.dp))

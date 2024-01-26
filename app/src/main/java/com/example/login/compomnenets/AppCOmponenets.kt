@@ -107,7 +107,7 @@ fun HeadingText(value:String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTextField(label: String, painterResource : Painter) {
+fun MyTextField(label: String, painterResource : Painter, onTextSelected: (String)-> Unit,errorStatus:Boolean) {
     val text = remember {
         mutableStateOf("")
     }
@@ -133,16 +133,18 @@ fun MyTextField(label: String, painterResource : Painter) {
                 value = text.value,
         onValueChange = {
             text.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = null, Modifier.size(32.dp) ) }
-
+         ,
+        isError = !errorStatus
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyPasswordField(label: String, painterResource : Painter) {
+fun MyPasswordField(label: String, painterResource : Painter,onTextSelected: (String)-> Unit,errorStatus:Boolean) {
     val password = remember {
         mutableStateOf("")
     }
@@ -170,6 +172,7 @@ fun MyPasswordField(label: String, painterResource : Painter) {
         value = password.value,
         onValueChange = {
             password.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = null, Modifier.size(32.dp) ) },
@@ -201,7 +204,8 @@ fun MyPasswordField(label: String, painterResource : Painter) {
         }
         else{
             PasswordVisualTransformation()
-        }
+        },
+        isError = !errorStatus
 
     )
 }
@@ -280,13 +284,57 @@ fun Divider()
 }
 
 @Composable
-fun endtext() {
+fun ButtonRegister(isEnabled:Boolean = false, onClicked:()->Unit) {
+    Button(
+        modifier = Modifier
+        .fillMaxWidth()
+        .height(45.dp),
+        onClick = {onClicked.invoke()},
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
 
+    )
+    {
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(45.dp)
+            .background(
+                brush = Brush.horizontalGradient(listOf(Color.Blue,Color.Magenta)),
+                shape = RoundedCornerShape(50.dp)
+            ),
+            contentAlignment = Alignment.Center)
+        {
+            Text(text = "Register",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp)
+        }
+    }
 }
 
 @Composable
-fun endtext1() {
+fun ButtonLogin() {
+    Button(onClick = {},modifier = Modifier
+        .fillMaxWidth()
+        .height(45.dp),
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(Color.Transparent)
+    )
+    {
 
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(45.dp)
+            .background(
+                brush = Brush.horizontalGradient(listOf(Color.Red, Color.Blue)),
+                shape = RoundedCornerShape(50.dp)
+            ),
+            contentAlignment = Alignment.Center)
+        {
+            Text(text = "Login",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp)
+        }
+    }
 }
 
 @Composable
