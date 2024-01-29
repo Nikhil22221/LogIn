@@ -1,15 +1,20 @@
 package com.example.login.data
 
+import android.content.ContentValues.TAG
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.login.data.rules.validator
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginViewModel : ViewModel() {
     var registrationUIState = mutableStateOf(RegistrationUIState())
 
+    var allvalidationspasses = mutableStateOf(false)
     fun onEVent(event : UIEvent)
     {
-        //validatewithrules()
+        validatewithrules()
         when(event){
             is UIEvent.FirstNameChanged -> {
                 registrationUIState.value = registrationUIState.value.copy(
@@ -37,7 +42,10 @@ class LoginViewModel : ViewModel() {
 
             is UIEvent.Registrationclicked ->
             {
-                validatewithrules()
+                createuserInFirebase(
+                    email = registrationUIState.value.email,
+                    password = registrationUIState.value.password
+                )
             }
         }
     }
@@ -58,8 +66,22 @@ class LoginViewModel : ViewModel() {
                     errorpassowrd = passresult.status
 
         )
+
+
+        allvalidationspasses.value = fnameresult.status && lnameresult.status && emailresult.status && passresult.status
     }
 
+
+private fun createuserInFirebase(email:String, password:String)
+{
+  FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password).
+          addOnCompleteListener {
+          Log.d(TAG,"isSuccessful = ${it.isSuccessful}")
+          }.
+          addOnFailureListener {
+              Log.d(TAG,"isSuccessful = ${it.message}")
+          }
+}
 
 
 

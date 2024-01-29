@@ -106,7 +106,7 @@ fun SignUpScreen(navController: NavController, loginViewModel: LoginViewModel = 
 
                 ButtonRegister(onClicked = {
                     loginViewModel.onEVent(UIEvent.Registrationclicked)
-                })
+                }, isEnabled = loginViewModel.allvalidationspasses.value)
             Spacer(modifier = Modifier.height(15.dp))
             Divider()
             Spacer(modifier = Modifier.height(15.dp))

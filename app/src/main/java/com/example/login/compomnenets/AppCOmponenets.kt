@@ -284,7 +284,7 @@ fun Divider()
 }
 
 @Composable
-fun ButtonRegister(isEnabled:Boolean = false, onClicked:()->Unit) {
+fun ButtonRegister(isEnabled:Boolean , onClicked:()->Unit) {
     Button(
         modifier = Modifier
         .fillMaxWidth()
@@ -292,6 +292,7 @@ fun ButtonRegister(isEnabled:Boolean = false, onClicked:()->Unit) {
         onClick = {onClicked.invoke()},
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
+        enabled = isEnabled
 
     )
     {
