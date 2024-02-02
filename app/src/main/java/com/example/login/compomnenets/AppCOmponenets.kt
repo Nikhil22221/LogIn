@@ -212,7 +212,7 @@ fun MyPasswordField(label: String, painterResource : Painter,onTextSelected: (St
 
 
 @Composable
-fun checkbox()
+fun checkbox(onCheckedChange: (Boolean)-> Unit)
 {
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -222,7 +222,10 @@ fun checkbox()
         
     {
         val checked = remember{ mutableStateOf(false) }
-    Checkbox(checked = checked.value, onCheckedChange ={checked.value = !checked.value} )
+    Checkbox(checked = checked.value, onCheckedChange ={
+        checked.value = !checked.value
+         onCheckedChange.invoke(it)}
+        )
 
         val ini = "By continuing you accept our "
         val next = " Privacy Policy "
@@ -289,7 +292,8 @@ fun ButtonRegister(isEnabled:Boolean , onClicked:()->Unit) {
         modifier = Modifier
         .fillMaxWidth()
         .height(45.dp),
-        onClick = {onClicked.invoke()},
+        onClick = {onClicked.invoke()
+                   },
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         enabled = isEnabled
@@ -313,12 +317,14 @@ fun ButtonRegister(isEnabled:Boolean , onClicked:()->Unit) {
 }
 
 @Composable
-fun ButtonLogin() {
-    Button(onClick = {},modifier = Modifier
+fun ButtonLogin(isEnabled: Boolean, onClick: () -> Unit) {
+    Button(modifier = Modifier
         .fillMaxWidth()
         .height(45.dp),
+        onClick = {onClick.invoke()},
         contentPadding = PaddingValues(),
-        colors = ButtonDefaults.buttonColors(Color.Transparent)
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
+        enabled = isEnabled
     )
     {
 

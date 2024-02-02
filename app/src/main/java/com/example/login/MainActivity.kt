@@ -20,6 +20,7 @@ import com.example.login.ui.theme.LOGInTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.login.screen.Home
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +53,9 @@ fun navigate()
         {
             SignUpScreen(navController)
         }
+       composable("home"){
+         Home(navController )
+       }
     }
 }
 

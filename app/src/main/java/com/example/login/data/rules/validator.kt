@@ -29,6 +29,12 @@ object validator {
         )
     }
 
+    fun validatePrivacyPolicyAcceptance(statusValue:Boolean): validateresult{
+        return validateresult(
+            statusValue
+        )
+    }
+
     data class validateresult(
         val status:Boolean = false
     )

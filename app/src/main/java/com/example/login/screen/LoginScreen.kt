@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.login.R
@@ -49,71 +51,110 @@ import com.example.login.compomnenets.NormalText
 //import com.example.login.compomnenets.endtext
 //import com.example.login.compomnenets.endtext1
 import com.example.login.compomnenets.undertext
+import com.example.login.data.LoginUIEvent
+import com.example.login.data.LoginViewModel
 import com.example.login.ui.theme.Primary
 import com.example.login.ui.theme.Purple40
+import kotlin.math.log
 
 @Composable
-fun LoginScreen(navController: NavController)
-{
-
-    Surface(
-
-
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
+fun LoginScreen(navController: NavController,loginViewModel: LoginViewModel = viewModel()) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    )
+    {
+        Surface(
 
 
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
 
-    ){
-        Image(painter = painterResource(id = R.drawable.img_9),
-            contentDescription = null,
-            contentScale = ContentScale.FillHeight,
-            modifier = Modifier.fillMaxSize())
 
-        Column(modifier = Modifier.fillMaxSize().padding(28.dp))
-        {
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.img_9),
+                contentDescription = null,
+                contentScale = ContentScale.FillHeight,
+                modifier = Modifier.fillMaxSize()
+            )
 
-            NormalText(value = "Login")
-            HeadingText(value = "Welcome Back")
-            Spacer(modifier = Modifier.height(25.dp))
-            MyTextField(label = "Email", painterResource(id = R.drawable.img_2), onTextSelected = {}, errorStatus = false)
-            MyPasswordField(label = "Password", painterResource(id = R.drawable.img_3), onTextSelected = {}, errorStatus = false )
-            Spacer(modifier = Modifier.height(45.dp))
-            undertext()
-            Spacer(modifier = Modifier.height(95.dp))
-            ButtonLogin()
-            Spacer(modifier = Modifier.height(10.dp))
-            Divider()
-            Spacer(modifier = Modifier.height(15.dp))
-            val ini = "Don't have an account yet? "
-            val next = " Register "
-
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(45.dp)
-                ,
-                verticalAlignment = Alignment.CenterVertically)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(28.dp)
+            )
             {
-                ClickableText(modifier = Modifier.fillMaxWidth(),
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Normal,
-                        fontStyle = FontStyle.Normal,
-                        textAlign = TextAlign.Center
-                    ), text =
-                    buildAnnotatedString {
-                        append(ini)
-                        withStyle(style = SpanStyle(color = Purple40))
-                        {
-                            pushStringAnnotation(tag = next, annotation = next)
-                            append(next)
-                        }
 
+                NormalText(value = "Login")
+                HeadingText(value = "Welcome Back")
+                Spacer(modifier = Modifier.height(25.dp))
+                MyTextField(
+                    label = "Email",
+                    painterResource(id = R.drawable.img_2),
+                    onTextSelected = {
+                        loginViewModel.onEVent(LoginUIEvent.LoginEmailChanged(it))
                     },
-                    onClick = {navController.navigate("signup")})
+                    errorStatus = loginViewModel.loginUIState.value.erroremail
+                )
+                MyPasswordField(
+                    label = "Password",
+                    painterResource(id = R.drawable.img_3),
+                    onTextSelected = {
+                        loginViewModel.onEVent((LoginUIEvent.LoginPasswordChanged(it)))
+                    },
+                    errorStatus = loginViewModel.loginUIState.value.errorpassowrd
+                )
+                Spacer(modifier = Modifier.height(45.dp))
+                undertext()
+                Spacer(modifier = Modifier.height(95.dp))
+                ButtonLogin(
+                    onClick = { loginViewModel.onEVent(LoginUIEvent.Loginclicked) },
+                    isEnabled = loginViewModel.allvalidationspasseslogin.value
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Divider()
+                Spacer(modifier = Modifier.height(15.dp))
+                val ini = "Don't have an account yet? "
+                val next = " Register "
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(45.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                )
+                {
+                    ClickableText(modifier = Modifier.fillMaxWidth(),
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Normal,
+                            fontStyle = FontStyle.Normal,
+                            textAlign = TextAlign.Center
+                        ), text =
+                        buildAnnotatedString {
+                            append(ini)
+                            withStyle(style = SpanStyle(color = Purple40))
+                            {
+                                pushStringAnnotation(tag = next, annotation = next)
+                                append(next)
+                            }
+
+                        },
+                        onClick = { navController.navigate("signup") })
+                }
+
             }
 
+        }
+        if(loginViewModel.Indicatorlog.value) {
+            CircularProgressIndicator()
+        }
+
+        if(loginViewModel.nav1.value)
+        {
+            navController.navigate("home")
         }
 
     }
